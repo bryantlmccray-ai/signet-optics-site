@@ -1,3 +1,4 @@
+@font-face { font-family:"Cormorant Garamond"; src:url("fonts/cormorant-garamond-latin.woff2") format("woff2"); font-weight:300 700; font-display:swap; }
 :root { --ground:#050506; --surface:#121111; --ivory:#EDE8DE; --muted:rgba(237,232,222,.6); --champagne:#D6B887; --hair:rgba(255,255,255,.08); }
 * { box-sizing:border-box; }
 html,body { margin:0; background:var(--ground); color:var(--ivory); font:300 17px/1.6 -apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif; -webkit-font-smoothing:antialiased; }
@@ -5,10 +6,10 @@ a { color:var(--champagne); }
 .hero { height:46vh; min-height:280px; background:url(hero.jpg) center/cover no-repeat; position:relative; }
 .hero::after { content:""; position:absolute; inset:0; background:linear-gradient(transparent 40%, var(--ground)); }
 main { max-width:680px; margin:0 auto; padding:0 24px 80px; }
-.mark { font:400 34px/1 "Times New Roman",Georgia,serif; letter-spacing:.32em; margin:-8px 0 10px; }
+.mark { font:500 36px/1 "Cormorant Garamond",Georgia,serif; letter-spacing:.32em; margin:-8px 0 10px; }
 .tag { letter-spacing:.12em; font-size:14px; color:var(--muted); margin:0 0 40px; }
-h1 { font:400 30px/1.25 Georgia,"Times New Roman",serif; margin:0 0 16px; }
-h2 { font:400 21px/1.3 Georgia,"Times New Roman",serif; margin:36px 0 8px; }
+h1 { font:500 34px/1.2 "Cormorant Garamond",Georgia,serif; margin:0 0 16px; }
+h2 { font:500 24px/1.3 "Cormorant Garamond",Georgia,serif; margin:36px 0 8px; }
 p, li { color:rgba(237,232,222,.85); }
 .card { background:var(--surface); border:1px solid var(--hair); border-radius:20px; padding:22px 24px; margin:24px 0; }
 .small { font-size:14px; color:var(--muted); }
