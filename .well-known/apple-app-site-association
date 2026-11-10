@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["LUL24DCJ9V.com.signetoptics.signet"],
+        "components": [
+          { "/": "/t", "comment": "A Signet chip tap opens the app when it is installed" },
+          { "/": "/t/", "comment": "Same, with a trailing slash" }
+        ]
+      }
+    ]
+  },
+  "appclips": {
+    "apps": ["LUL24DCJ9V.com.signetoptics.signet.Clip"]
+  }
+}

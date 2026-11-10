@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signet · Verify a pair</title>
+<meta name="description" content="Check that a Signet pair is genuine.">
+<meta name="robots" content="noindex">
+<meta name="apple-itunes-app" content="app-id=6832422561, app-clip-bundle-id=com.signetoptics.signet.Clip, app-clip-display=card">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main>
+  <div class="mark">SIGNET</div>
+  <h1 id="title">Checking this pair</h1>
+  <p id="detail">One moment.</p>
+  <div class="card" id="cert" hidden></div>
+  <p class="tag"><a href="../">Signet support</a></p>
+</main>
+<script>
+// A Signet chip writes a new signed code on every tap: ?e=<encrypted id and counter>&c=<signature>.
+// This page asks the Signet registry whether it is genuine. It never claims the pair and never shows the owner.
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const e = q.get("e"), c = q.get("c");
+  const title = document.getElementById("title"), detail = document.getElementById("detail"), cert = document.getElementById("cert");
+  const say = (t, d) => { title.textContent = t; detail.textContent = d; };
+  if (!e || !c) return say("No Signet code here", "Hold a phone to the inside of the left temple of a Signet frame.");
+  try {
+    const r = await fetch("https://pnlxqzuxwemczpfalhze.supabase.co/functions/v1/verify", {
+      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ e, c, claim: false }),
+    });
+    const j = await r.json();
+    if (j.replay) return say("Copied tap", "This code was already used. A genuine Signet chip writes a new one every time. Tap the frame again.");
+    if (!j.genuine) return say("Not verified", "This code did not come from a Signet chip.");
+    if (j.status === "lost") return say("Reported lost or stolen", `Pair ${j.serial} is genuine, but its owner reported it lost. Do not accept it as a sale.`);
+    say("This pair is genuine.", `Pair ${j.serial}.`);
+    const k = j.certificate || {};
+    const rows = [["Frame", [k.frame, k.finish].filter(Boolean).join(", ")], ["Tested by", k.lab], ["Last tested", k.last_tested]];
+    cert.replaceChildren(...rows.filter(([, v]) => v).map(([l, v]) => {
+      const p = document.createElement("p"); p.style.margin = "0 0 6px";
+      const s = document.createElement("strong"); s.textContent = l + ": "; p.append(s, document.createTextNode(v)); return p;
+    }));
+    cert.hidden = false;
+  } catch {
+    say("Can't reach Signet", "Verification needs a connection. Tap the frame again in a moment.");
+  }
+})();
+</script>
+</body>
+</html>
