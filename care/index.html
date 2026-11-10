@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signet · Signet Care</title>
+<meta name="description" content="Request your yearly Signet Care visit.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main>
+  <div class="mark" style="margin-top:48px">SIGNET</div>
+  <h1>Signet Care</h1>
+  <p id="detail">Each pair is re-tested once a year, so its certificate stays current.</p>
+  <p style="margin:32px 0"><a class="button" id="book" href="mailto:bmccray@joinmonarkapp.com?subject=Signet%20Care%20visit">Request a visit</a></p>
+  <p class="small">Opens an email to your Signet advisor. Nothing is sent until you send it. <a href="../">Signet support</a></p>
+</main>
+<script>
+// Opened from the Book Signet Care action on a Signet certificate pass: /care/?pair=<serial>.
+// The serial only fills in the email subject.
+(() => {
+  const pair = (new URLSearchParams(location.search).get("pair") || "").toUpperCase().replace(/[^A-Z0-9-]/g, "").slice(0, 32);
+  if (!pair) return;
+  document.getElementById("detail").textContent = `Pair ${pair} is re-tested once a year, so its certificate stays current.`;
+  document.getElementById("book").href = "mailto:bmccray@joinmonarkapp.com?subject=" + encodeURIComponent(`Signet Care visit, pair ${pair}`);
+})();
+</script>
+</body>
+</html>
